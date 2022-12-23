@@ -1,0 +1,2 @@
+2022-12-22 16:51:30	-	cheesy_rubens	-	ad570963ce7b3e350af81ea9c903e5c3	215abcdf-c8b6-4df8-bb50-52207c1ae459	nextflow run .
+2022-12-22 16:52:02	-	big_kilby	-	ad570963ce7b3e350af81ea9c903e5c3	93e5a7b1-2d79-44d9-94ff-693e23ec6954	nextflow run --fasta=/foo/ .
