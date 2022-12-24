@@ -1,20 +1,20 @@
 process COMET_ONCE {
-    publishDir "${params.result_dir}/${params.run_name}_comet", failOnError: true
+    publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
     label 'process_high'
     debug true
 
     input:
         path mzml_file
         path comet_params_file
-	path mzml_file
+        path fasta_file
 
     output:
-        path path("${mzml_file.baseName}.pep.xml")
-        path path("${mzml_file.baseName}.pin")
+        path("${mzml_file.baseName}.pep.xml"), emit: pepxml
+        path("${mzml_file.baseName}.pin"), emit: pin
 
     script:
     """
-    comet.linux.exe \
+    comet \
         -P${comet_params_file} \
         ${mzml_file}
     echo "DONE!" # Needed for proper exit

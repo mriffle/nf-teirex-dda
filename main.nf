@@ -4,6 +4,7 @@ nextflow.enable.dsl = 2
 
 // Modules
 include { COMET_ONCE } from "./modules/comet"
+include { PERCOLATOR } from "./modules/percolator"
 
 
 //
@@ -30,10 +31,10 @@ workflow {
     fasta = file(params.fasta, checkIfExists: true)
     mzml = file(params.mzml, checkIfExists: true)
     comet_params = file(params.comet_params, checkIfExists: true)
-    tags = tuple
 
     COMET_ONCE(mzml, comet_params, fasta)
-    | set { quant_results }
+    PERCOLATOR(COMET_ONCE.out.pin)
+
 }
 
 
