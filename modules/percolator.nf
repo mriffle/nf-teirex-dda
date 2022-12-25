@@ -7,7 +7,7 @@ process PERCOLATOR {
         path pin_file
 
     output:
-        path("${pin_file.baseName}.pout.xml")
+        path("${pin_file.baseName}.pout.xml"), emit: pout
 
     script:
     """

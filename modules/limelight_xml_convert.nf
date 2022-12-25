@@ -15,11 +15,10 @@ process CONVERT_TO_LIMELIGHT_XML {
     script:
     """
     echo "Running Limelight XML conversion..."
-    cometPercolator2LimelightXML \
         -c ${comet_params} \
         -f ${fasta} \
         -p ${pout} \
-        -d ${pepxml.parent} \
+        -d . \
         -o "${pepxml.baseName}.limelight.xml" \
         -v
 

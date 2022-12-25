@@ -5,7 +5,7 @@ nextflow.enable.dsl = 2
 // Modules
 include { COMET_ONCE } from "./modules/comet"
 include { PERCOLATOR } from "./modules/percolator"
-
+include { CONVERT_TO_LIMELIGHT_XML } from "./modules/limelight_xml_convert"
 
 //
 // Used for email notifications
@@ -34,6 +34,7 @@ workflow {
 
     COMET_ONCE(mzml, comet_params, fasta)
     PERCOLATOR(COMET_ONCE.out.pin)
+    CONVERT_TO_LIMELIGHT_XML(COMET_ONCE.out.pepxml, PERCOLATOR.out.pout, fasta, comet_params)
 
 }
 
