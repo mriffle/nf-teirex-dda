@@ -11,10 +11,12 @@ process PERCOLATOR {
 
     script:
     """
+    echo "Running percolator..."
     percolator \
         -X "${pin_file.baseName}.pout.xml" \
-        ${pin_file}
-    echo "DONE!" # Needed for proper exit
+        ${pin_file} \
+        >/dev/null
+    echo "Done!" # Needed for proper exit
     """
 
     stub:

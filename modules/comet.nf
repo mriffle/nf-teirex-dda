@@ -14,6 +14,7 @@ process COMET_ONCE {
 
     script:
     """
+    echo "Running comet..."
     comet \
         -P${comet_params_file} \
         ${mzml_file}
