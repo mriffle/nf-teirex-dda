@@ -20,7 +20,7 @@ process CONVERT_TO_LIMELIGHT_XML {
         -f ${fasta} \
         -p ${pout} \
         -d . \
-        -o "${pepxml.baseName}.limelight.xml" \
+        -o ${pepxml.baseName}.limelight.xml \
         -v
 
     echo "Done!" # Needed for proper exit
