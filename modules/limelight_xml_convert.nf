@@ -8,6 +8,7 @@ process CONVERT_TO_LIMELIGHT_XML {
         path pout
         path fasta
         path comet_params
+        env CONVERTER_JAVA_PARAMS
 
     output:
         path("${pepxml.baseName}.limelight.xml")

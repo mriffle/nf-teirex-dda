@@ -34,7 +34,7 @@ workflow {
 
     COMET_ONCE(mzml, comet_params, fasta)
     PERCOLATOR(COMET_ONCE.out.pin)
-    CONVERT_TO_LIMELIGHT_XML(COMET_ONCE.out.pepxml, PERCOLATOR.out.pout, fasta, comet_params)
+    CONVERT_TO_LIMELIGHT_XML(COMET_ONCE.out.pepxml, PERCOLATOR.out.pout, fasta, comet_params, params.limelight_xml_conversion_params)
 
 }
 
