@@ -8,22 +8,6 @@ include { PERCOLATOR } from "./modules/percolator"
 include { CONVERT_TO_LIMELIGHT_XML } from "./modules/limelight_xml_convert"
 include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
 
-//
-// Used for email notifications
-//
-def email() {
-    // Create the email text:
-    def (subject, msg) = EmailTemplate.email(workflow, params)
-    // Send the email:
-    if (params.email) {
-        sendMail(
-            to: "$params.email",
-            subject: subject,
-            body: msg
-        )
-    }
-}
-
 
 //
 // The main workflow
@@ -47,6 +31,22 @@ workflow {
             params.limelight_search_short_name,
             params.limelight_upload_key,
             params.limelight_submit_import_java_params
+        )
+    }
+}
+
+//
+// Used for email notifications
+//
+def email() {
+    // Create the email text:
+    def (subject, msg) = EmailTemplate.email(workflow, params)
+    // Send the email:
+    if (params.email) {
+        sendMail(
+            to: "$params.email",
+            subject: subject,
+            body: msg
         )
     }
 }

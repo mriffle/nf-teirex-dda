@@ -27,9 +27,4 @@ process UPLOAD_TO_LIMELIGHT {
 
     echo "Done!" # Needed for proper exit
     """
-
-    stub:
-    """
-    touch "${pepxml.baseName}.limelight.xml"
-    """
 }
