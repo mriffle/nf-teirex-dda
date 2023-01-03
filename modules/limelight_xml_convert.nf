@@ -11,7 +11,7 @@ process CONVERT_TO_LIMELIGHT_XML {
         env CONVERTER_JAVA_PARAMS
 
     output:
-        path("${pepxml.baseName}.limelight.xml")
+        path("${pepxml.baseName}.limelight.xml"), emit: limelight_xml
 
     script:
     """

@@ -6,6 +6,7 @@ nextflow.enable.dsl = 2
 include { COMET_ONCE } from "./modules/comet"
 include { PERCOLATOR } from "./modules/percolator"
 include { CONVERT_TO_LIMELIGHT_XML } from "./modules/limelight_xml_convert"
+include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
 
 //
 // Used for email notifications
@@ -34,10 +35,21 @@ workflow {
 
     COMET_ONCE(mzml, comet_params, fasta)
     PERCOLATOR(COMET_ONCE.out.pin)
-    CONVERT_TO_LIMELIGHT_XML(COMET_ONCE.out.pepxml, PERCOLATOR.out.pout, fasta, comet_params, params.limelight_xml_conversion_params)
+    CONVERT_TO_LIMELIGHT_XML(COMET_ONCE.out.pepxml, PERCOLATOR.out.pout, fasta, comet_params, params.limelight_xml_conversion_java_params)
 
+    if (params.limelight_upload) {
+        UPLOAD_TO_LIMELIGHT(
+            CONVERT_TO_LIMELIGHT_XML.out.limelight_xml,
+            mzml,
+            params.limelight_webapp_url,
+            params.limelight_project_id,
+            params.limelight_search_description,
+            params.limelight_search_short_name,
+            params.limelight_upload_key,
+            params.limelight_submit_import_java_params
+        )
+    }
 }
-
 
 //
 // This is a dummy workflow for testing
