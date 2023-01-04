@@ -5,6 +5,7 @@ nextflow.enable.dsl = 2
 // Modules
 include { COMET_ONCE } from "./modules/comet"
 include { PERCOLATOR } from "./modules/percolator"
+include { FILTER_PIN } from "./modules/filter_pin"
 include { CONVERT_TO_LIMELIGHT_XML } from "./modules/limelight_xml_convert"
 include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
 
@@ -20,7 +21,8 @@ workflow {
     comet_params = file(params.comet_params, checkIfExists: true)
 
     COMET_ONCE(mzml, comet_params, fasta)
-    PERCOLATOR(COMET_ONCE.out.pin)
+    FILTER_PIN(COMET_ONCE.out.pin)
+    PERCOLATOR(FILTER_PIN.out.filtered_pin)
     CONVERT_TO_LIMELIGHT_XML(COMET_ONCE.out.pepxml, PERCOLATOR.out.pout, fasta, comet_params, params.limelight_xml_conversion_java_params)
 
     if (params.limelight_upload) {
