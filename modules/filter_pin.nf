@@ -4,7 +4,7 @@ process FILTER_PIN {
     debug true
 
     input:
-        path pin
+        each path(pin)
 
     output:
         path("${pin.baseName}.filtered.pin"), emit: filtered_pin
@@ -19,6 +19,6 @@ process FILTER_PIN {
 
     stub:
     """
-    touch "${pepxml.baseName}.limelight.xml"
+    touch "${pin.baseName}.filtered.pin"
     """
 }

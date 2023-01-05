@@ -11,7 +11,7 @@ process CONVERT_TO_LIMELIGHT_XML {
         env CONVERTER_JAVA_PARAMS
 
     output:
-        path("${pepxml.baseName}.limelight.xml"), emit: limelight_xml
+        path("results.limelight.xml"), emit: limelight_xml
 
     script:
     """
@@ -21,7 +21,7 @@ process CONVERT_TO_LIMELIGHT_XML {
         -f ${fasta} \
         -p ${pout} \
         -d . \
-        -o ${pepxml.baseName}.limelight.xml \
+        -o results.limelight.xml \
         -v
 
     echo "Done!" # Needed for proper exit
