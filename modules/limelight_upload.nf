@@ -37,6 +37,4 @@ process UPLOAD_TO_LIMELIGHT {
         ${tags_param}
     echo "Done!" # Needed for proper exit
     """
-
-    //--scan-file=${mzml} \
 }
