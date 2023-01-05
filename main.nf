@@ -9,6 +9,7 @@ include { FILTER_PIN } from "./modules/filter_pin"
 include { COMBINE_PIN_FILES } from "./modules/combine_pin_files"
 include { CONVERT_TO_LIMELIGHT_XML } from "./modules/limelight_xml_convert"
 include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
+include { ADD_FASTA_TO_COMET_PARAMS } from "./modules/add_fasta_to_comet_params"
 
 //
 // The main workflow
@@ -23,9 +24,13 @@ workflow {
     if(mzml_files.size() < 1) {
         error "No mzML files in $mzml_dir"
     }
-    
 
-    COMET_MULTIPLE_FILES_SEQUENTIALLY(mzml_files, comet_params, fasta)
+    // modify comet.params to specify search database
+
+    
+    new_comet_params = ADD_FASTA_TO_COMET_PARAMS(comet_params, fasta)
+
+    COMET_MULTIPLE_FILES_SEQUENTIALLY(mzml_files, new_comet_params, fasta)
 
     FILTER_PIN(COMET_MULTIPLE_FILES_SEQUENTIALLY.out.pin)
     filtered_pin_files = FILTER_PIN.out.collect()
@@ -34,7 +39,7 @@ workflow {
 
     PERCOLATOR(COMBINE_PIN_FILES.out.combined_pin)
 
-    CONVERT_TO_LIMELIGHT_XML(COMET_MULTIPLE_FILES_SEQUENTIALLY.out.pepxml, PERCOLATOR.out.pout, fasta, comet_params, params.limelight_xml_conversion_java_params)
+    CONVERT_TO_LIMELIGHT_XML(COMET_MULTIPLE_FILES_SEQUENTIALLY.out.pepxml, PERCOLATOR.out.pout, fasta, new_comet_params, params.limelight_xml_conversion_java_params)
 
     if (params.limelight_upload) {
         UPLOAD_TO_LIMELIGHT(
