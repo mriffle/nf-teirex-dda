@@ -42,12 +42,13 @@ workflow {
     if (params.limelight_upload) {
         UPLOAD_TO_LIMELIGHT(
             CONVERT_TO_LIMELIGHT_XML.out.limelight_xml,
-            mzml,
+            mzml_files,
             params.limelight_webapp_url,
             params.limelight_project_id,
             params.limelight_search_description,
             params.limelight_search_short_name,
             params.limelight_upload_key,
+            params.limelight_tags,
             params.limelight_submit_import_java_params
         )
     }

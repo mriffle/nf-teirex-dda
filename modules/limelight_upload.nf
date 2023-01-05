@@ -4,15 +4,24 @@ process UPLOAD_TO_LIMELIGHT {
 
     input:
         path limelight_xml
-        path mzml
+        path mzml_files
         val webapp_url
         val project_id
         val search_long_name
         val search_short_name
         val limelight_upload_key
+        val tags
         env LIMELIGHT_SUBMIT_JAVA_PARAMS
 
     script:
+
+    tags_param = ''
+    if(tags) {
+        tags_param = "--search-tag=\"${tags.split(',').join('\" --search-tag=\"')}\""
+    }
+
+    scans_param = "--scan-file=${(mzml_files as List).join(' --scan-file=')}"
+
     """
     echo "Submitting search results for Limelight import..."
         limelightSubmitImport \
@@ -21,10 +30,13 @@ process UPLOAD_TO_LIMELIGHT {
         --user-submit-import-key=${limelight_upload_key} \
         --project-id=${project_id} \
         --limelight-xml-file=${limelight_xml} \
-        --scan-file=${mzml} \
         --search-description="${search_long_name}" \
-        --search-short-label="${search_short_name}"
-
+        --search-short-label="${search_short_name}" \
+        --send-search-path \
+        ${tags_param} \
+        ${scans_param}
     echo "Done!" # Needed for proper exit
     """
+
+    //--scan-file=${mzml} \
 }
