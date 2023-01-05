@@ -26,8 +26,6 @@ workflow {
     }
 
     // modify comet.params to specify search database
-
-    
     new_comet_params = ADD_FASTA_TO_COMET_PARAMS(comet_params, fasta)
 
     COMET_MULTIPLE_FILES_SEQUENTIALLY(mzml_files, new_comet_params, fasta)
