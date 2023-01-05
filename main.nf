@@ -10,9 +10,6 @@ include { COMBINE_PIN_FILES } from "./modules/combine_pin_files"
 include { CONVERT_TO_LIMELIGHT_XML } from "./modules/limelight_xml_convert"
 include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
 
-foo = "1,2,3,4,5"
-println(foo.split(',')[1])
-
 //
 // The main workflow
 //
