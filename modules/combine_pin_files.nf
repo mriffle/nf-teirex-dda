@@ -12,7 +12,8 @@ process COMBINE_PIN_FILES {
     script:
     command = ''
 
-    pin_files.indexed().collect { index, item ->
+    // sort the files so subsequent runs of pipeline process files in same order
+    pin_files.sort().indexed().collect { index, item ->
         if(index == 0) {
             command = command + "cat $item >combined.filtered.pin\n"
         } else {
