@@ -33,8 +33,8 @@ process UPLOAD_TO_LIMELIGHT {
         --search-description="${search_long_name}" \
         --search-short-label="${search_short_name}" \
         --send-search-path \
-        ${tags_param} \
-        ${scans_param}
+        ${scans_param} \
+        ${tags_param}
     echo "Done!" # Needed for proper exit
     """
 
