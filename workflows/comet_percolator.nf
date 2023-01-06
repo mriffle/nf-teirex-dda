@@ -3,7 +3,6 @@ include { COMET_SERIAL } from "../modules/comet"
 include { PERCOLATOR } from "../modules/percolator"
 include { FILTER_PIN } from "../modules/filter_pin"
 include { COMBINE_PIN_FILES } from "../modules/combine_pin_files"
-include { UPLOAD_TO_LIMELIGHT } from "../modules/limelight_upload"
 include { ADD_FASTA_TO_COMET_PARAMS } from "../modules/add_fasta_to_comet_params"
 include { CONVERT_TO_LIMELIGHT_XML } from "../modules/limelight_xml_convert"
 

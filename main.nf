@@ -3,7 +3,7 @@
 nextflow.enable.dsl = 2
 
 // modules
-include { CONVERT_TO_LIMELIGHT_XML } from "./modules/limelight_xml_convert"
+include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
 
 // Sub workflows
 include { wf_comet_percolator } from "./workflows/comet_percolator"
