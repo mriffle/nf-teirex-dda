@@ -29,6 +29,6 @@ process CONVERT_TO_LIMELIGHT_XML {
 
     stub:
     """
-    touch "${pepxml.baseName}.limelight.xml"
+    touch "results.limelight.xml"
     """
 }
