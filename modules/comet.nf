@@ -28,7 +28,7 @@ process COMET_SINGLE_FILE {
     """
 }
 
-process COMET_MULTIPLE_FILES_SEQUENTIALLY {
+process COMET_SERIAL {
     publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
     label 'process_high'
     debug true
