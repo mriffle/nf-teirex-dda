@@ -2,6 +2,7 @@ process COMBINE_PIN_FILES {
     publishDir "${params.result_dir}/percolator", failOnError: true, mode: 'copy'
     label 'process_high'
     debug true
+    container 'ubuntu:22.04'
 
     input:
         path pin_files

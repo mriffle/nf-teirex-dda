@@ -1,6 +1,7 @@
 process UPLOAD_TO_LIMELIGHT {
     label 'process_low'
     debug true
+    container 'mriffle/limelight-submit-import:4'
 
     input:
         path limelight_xml

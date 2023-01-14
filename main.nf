@@ -21,9 +21,13 @@ workflow {
     println(comet_params)
     println(mzml_dir)
 
-    mzml_dir = "s3:/$mzml_dir"
-    comet_params = "s3:/$comet_params"
-    fasta = "s3:/$fasta"
+    println workflow.profile
+
+    if(workflow.profile == 'aws') {
+        mzml_dir = "s3:/$mzml_dir"
+        comet_params = "s3:/$comet_params"
+        fasta = "s3:/$fasta"
+    }
 
     // get our mzML files, die if none are found
     println(mzml_dir)
