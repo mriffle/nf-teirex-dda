@@ -19,9 +19,7 @@ workflow {
     mzml_dir = file(params.mzml_dir, checkIfExists: true)
 
     // get our mzML files, die if none are found
-    println(mzml_dir)
     mzml_files = file("$mzml_dir/*.mzML")
-    println(mzml_files)
 
     if(mzml_files.size() < 1) {
         error "No mzML files in $mzml_dir"
