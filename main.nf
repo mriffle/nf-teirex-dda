@@ -7,6 +7,7 @@ include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
 
 // Sub workflows
 include { wf_comet_percolator } from "./workflows/comet_percolator"
+include { wf_comet_percolator_local } from "./workflows/comet_percolator_local"
 
 //
 // The main workflow
@@ -26,7 +27,17 @@ workflow {
         error "No mzML files in $mzml_dir"
     }
 
-    limelight_xml = wf_comet_percolator(mzml_files, comet_params, fasta)
+    /**
+     * The 'standard' workflow runs locally, and as such, we don't want comet to
+     * run in parallel on all input mzml files--we want to pass all mzML files to
+     * a single invocation of comet, where it will run them all serially.
+     */
+    if(workflow.profile == 'standard') {
+        limelight_xml = wf_comet_percolator_local(mzml_files, comet_params, fasta)
+    } else {
+        mzml_files_ch = Channel.fromList(mzml_files)
+        limelight_xml = wf_comet_percolator(mzml_files_ch, comet_params, fasta)
+    }
 
     if (params.limelight_upload) {
         UPLOAD_TO_LIMELIGHT(
