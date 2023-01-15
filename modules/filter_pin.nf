@@ -5,7 +5,7 @@ process FILTER_PIN {
     container 'mriffle/filter-pin:1.0.0'
 
     input:
-        each path(pin)
+        path pin
 
     output:
         path("${pin.baseName}.filtered.pin"), emit: filtered_pin
