@@ -3,6 +3,7 @@ process UPLOAD_TO_LIMELIGHT {
     label 'process_low'
     debug true
     container 'mriffle/limelight-submit-import:4'
+    secret 'LIMELIGHT_SUBMIT_UPLOAD_KEY'
 
     input:
         path limelight_xml
@@ -11,7 +12,6 @@ process UPLOAD_TO_LIMELIGHT {
         val project_id
         val search_long_name
         val search_short_name
-        val limelight_upload_key
         val tags
         env LIMELIGHT_SUBMIT_JAVA_PARAMS
 
@@ -33,7 +33,7 @@ process UPLOAD_TO_LIMELIGHT {
         limelightSubmitImport \
         --retry-count-limit=5 \
         --limelight-web-app-url=${webapp_url} \
-        --user-submit-import-key=${limelight_upload_key} \
+        --user-submit-import-key=\$LIMELIGHT_SUBMIT_UPLOAD_KEY \
         --project-id=${project_id} \
         --limelight-xml-file=${limelight_xml} \
         --search-description="${search_long_name}" \
