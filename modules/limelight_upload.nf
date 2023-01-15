@@ -14,6 +14,10 @@ process UPLOAD_TO_LIMELIGHT {
         val tags
         env LIMELIGHT_SUBMIT_JAVA_PARAMS
 
+    output:
+        path("*.stdout"), emit: stdout
+        path("*.stderr"), emit: stderr
+
     script:
 
     tags_param = ''
@@ -35,7 +39,8 @@ process UPLOAD_TO_LIMELIGHT {
         --search-short-label="${search_short_name}" \
         --send-search-path \
         ${scans_param} \
-        ${tags_param}
+        ${tags_param} \
+        1>limelight-submit-upload.stdout 2>limelight-submit-upload.stderr
     echo "Done!" # Needed for proper exit
     """
 }
