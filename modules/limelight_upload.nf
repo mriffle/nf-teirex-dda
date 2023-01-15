@@ -1,4 +1,5 @@
 process UPLOAD_TO_LIMELIGHT {
+    publishDir "${params.result_dir}/limelight", failOnError: true, mode: 'copy'
     label 'process_low'
     debug true
     container 'mriffle/limelight-submit-import:4'
