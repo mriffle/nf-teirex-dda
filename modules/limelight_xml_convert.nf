@@ -13,6 +13,8 @@ process CONVERT_TO_LIMELIGHT_XML {
 
     output:
         path("results.limelight.xml"), emit: limelight_xml
+        path("*.stdout"), emit: stdout
+        path("*.stderr"), emit: stderr
 
     script:
     """
@@ -23,7 +25,8 @@ process CONVERT_TO_LIMELIGHT_XML {
         -p ${pout} \
         -d . \
         -o results.limelight.xml \
-        -v
+        -v \
+        1>limelight-xml-convert.stdout 2>limelight-xml-convert.stderr
 
     echo "Done!" # Needed for proper exit
     """

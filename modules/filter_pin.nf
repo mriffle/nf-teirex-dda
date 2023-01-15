@@ -9,11 +9,12 @@ process FILTER_PIN {
 
     output:
         path("${pin.baseName}.filtered.pin"), emit: filtered_pin
+        path("*.stderr"), emit: stderr
 
     script:
     """
     echo "Removing all non rank one hits from Percolator input file..."
-        filterPIN ${pin} >${pin.baseName}.filtered.pin
+        filterPIN ${pin} >${pin.baseName}.filtered.pin 2>${pin.baseName}.filtered.pin.stderr
 
     echo "Done!" # Needed for proper exit
     """

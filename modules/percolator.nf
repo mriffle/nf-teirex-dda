@@ -9,6 +9,8 @@ process PERCOLATOR {
 
     output:
         path("${pin_file.baseName}.pout.xml"), emit: pout
+        path("*.stdout"), emit: stdout
+        path("*.stderr"), emit: stderr
 
     script:
     """
@@ -16,7 +18,7 @@ process PERCOLATOR {
     percolator \
         -X "${pin_file.baseName}.pout.xml" \
         ${pin_file} \
-        >/dev/null
+        >percolator.stdout 2>percolator.stderr
     echo "Done!" # Needed for proper exit
     """
 

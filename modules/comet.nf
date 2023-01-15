@@ -12,13 +12,17 @@ process COMET_MULTI_FILE {
     output:
         path("*.pep.xml"), emit: pepxml
         path("*.pin"), emit: pin
+        path("*.stdout"), emit: stdout
+        path("*.stderr"), emit: stderr
 
     script:
     """
     echo "Running comet..."
     comet \
         -P${comet_params_file} \
-        ${(mzml_files as List).join(' ')}
+        ${(mzml_files as List).join(' ')} \
+        1>comet.stdout 2>comet.stderr
+
     echo "DONE!" # Needed for proper exit
     """
 
@@ -43,13 +47,17 @@ process COMET_SINGLE_FILE {
     output:
         path("*.pep.xml"), emit: pepxml
         path("*.pin"), emit: pin
+        path("*.stdout"), emit: stdout
+        path("*.stderr"), emit: stderr
 
     script:
     """
     echo "Running comet..."
     comet \
         -P${comet_params_file} \
-        ${mzml_file}
+        ${mzml_file} \
+        1>${mzml_file.baseName}.comet.stdout 2>${mzml_file.baseName}.comet.stderr
+
     echo "DONE!" # Needed for proper exit
     """
 

@@ -17,12 +17,12 @@ workflow wf_comet_percolator_local {
     main:
 
         // modify comet.params to specify search database
-        new_comet_params = ADD_FASTA_TO_COMET_PARAMS(comet_params, fasta)
+        ADD_FASTA_TO_COMET_PARAMS(comet_params, fasta)
+        new_comet_params = ADD_FASTA_TO_COMET_PARAMS.out.comet_fasta_params
 
         COMET_MULTI_FILE(mzml_files, new_comet_params, fasta)
-
         FILTER_PIN(COMET_MULTI_FILE.out.pin)
-        filtered_pin_files = FILTER_PIN.out.collect()
+        filtered_pin_files = FILTER_PIN.out.filtered_pin.collect()
 
         COMBINE_PIN_FILES(filtered_pin_files)
 

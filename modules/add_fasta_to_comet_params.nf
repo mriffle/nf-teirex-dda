@@ -10,13 +10,14 @@ process ADD_FASTA_TO_COMET_PARAMS {
 
     output:
         path("comet.fasta.params"), emit: comet_fasta_params
+        path("*.stderr"), emit: stderr
 
     script:
 
     """
     echo "Adding FASTA to comet.params..."
 
-    sed -e 's/database_name = \\S\\+/database_name = $fasta/g' $comet_params >comet.fasta.params
+    sed -e 's/database_name = \\S\\+/database_name = $fasta/g' $comet_params >comet.fasta.params 2>add-fasta-to-params.stderr
 
     echo "DONE!" # Needed for proper exit
     """
