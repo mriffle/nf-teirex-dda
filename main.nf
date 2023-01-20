@@ -45,8 +45,7 @@ workflow {
             params.limelight_project_id,
             params.limelight_search_description,
             params.limelight_search_short_name,
-            params.limelight_tags,
-            params.limelight_submit_import_java_params
+            params.limelight_tags
         )
     }
 }

@@ -32,8 +32,7 @@ workflow wf_comet_percolator {
             COMET_SINGLE_FILE.out.pepxml.collect(), 
             PERCOLATOR.out.pout, 
             fasta, 
-            new_comet_params, 
-            params.limelight_xml_conversion_java_params
+            new_comet_params
         )
     
     emit:

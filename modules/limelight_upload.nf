@@ -1,3 +1,8 @@
+def exec_java_command(mem) {
+    def xmx = "-Xmx${mem.toGiga()-1}G"
+    return "java -Djava.aws.headless=true ${xmx} -jar /usr/local/bin/limelightSubmitImport.jar"
+}
+
 process UPLOAD_TO_LIMELIGHT {
     publishDir "${params.result_dir}/limelight", failOnError: true, mode: 'copy'
     label 'process_low'
@@ -13,7 +18,6 @@ process UPLOAD_TO_LIMELIGHT {
         val search_long_name
         val search_short_name
         val tags
-        env LIMELIGHT_SUBMIT_JAVA_PARAMS
 
     output:
         path("*.stdout"), emit: stdout
@@ -30,7 +34,7 @@ process UPLOAD_TO_LIMELIGHT {
 
     """
     echo "Submitting search results for Limelight import..."
-        limelightSubmitImport \
+        ${exec_java_command(task.memory)} \
         --retry-count-limit=5 \
         --limelight-web-app-url=${webapp_url} \
         --user-submit-import-key=\$LIMELIGHT_SUBMIT_UPLOAD_KEY \

@@ -1,3 +1,8 @@
+def exec_java_command(mem) {
+    def xmx = "-Xmx${mem.toGiga()-1}G"
+    return "java -Djava.aws.headless=true ${xmx} -jar /usr/local/bin/filterPIN.jar"
+}
+
 process FILTER_PIN {
     publishDir "${params.result_dir}/percolator", failOnError: true, mode: 'copy'
     label 'process_low'
@@ -14,7 +19,7 @@ process FILTER_PIN {
     script:
     """
     echo "Removing all non rank one hits from Percolator input file..."
-        filterPIN ${pin} >${pin.baseName}.filtered.pin 2>${pin.baseName}.filtered.pin.stderr
+        ${exec_java_command(task.memory)} ${pin} >${pin.baseName}.filtered.pin 2>${pin.baseName}.filtered.pin.stderr
 
     echo "Done!" # Needed for proper exit
     """

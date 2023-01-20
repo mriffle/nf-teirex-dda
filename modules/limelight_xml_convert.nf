@@ -1,3 +1,8 @@
+def exec_java_command(mem) {
+    def xmx = "-Xmx${mem.toGiga()-1}G"
+    return "java -Djava.aws.headless=true ${xmx} -jar /usr/local/bin/cometPercolator2LimelightXML.jar"
+}
+
 process CONVERT_TO_LIMELIGHT_XML {
     publishDir "${params.result_dir}/limelight", failOnError: true, mode: 'copy'
     label 'process_low'
@@ -9,7 +14,6 @@ process CONVERT_TO_LIMELIGHT_XML {
         path pout
         path fasta
         path comet_params
-        env CONVERTER_JAVA_PARAMS
 
     output:
         path("results.limelight.xml"), emit: limelight_xml
@@ -19,7 +23,7 @@ process CONVERT_TO_LIMELIGHT_XML {
     script:
     """
     echo "Running Limelight XML conversion..."
-        cometPercolator2LimelightXML \
+        ${exec_java_command(task.memory)} \
         -c ${comet_params} \
         -f ${fasta} \
         -p ${pout} \

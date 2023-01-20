@@ -28,7 +28,12 @@ workflow wf_comet_percolator_local {
 
         PERCOLATOR(COMBINE_PIN_FILES.out.combined_pin)
 
-        CONVERT_TO_LIMELIGHT_XML(COMET_MULTI_FILE.out.pepxml, PERCOLATOR.out.pout, fasta, new_comet_params, params.limelight_xml_conversion_java_params)
+        CONVERT_TO_LIMELIGHT_XML(
+            COMET_MULTI_FILE.out.pepxml,
+            PERCOLATOR.out.pout,
+            fasta,
+            new_comet_params
+        )
     
     emit:
         CONVERT_TO_LIMELIGHT_XML.out.limelight_xml
