@@ -1,6 +1,6 @@
 process COMBINE_PIN_FILES {
     publishDir "${params.result_dir}/percolator", failOnError: true, mode: 'copy'
-    label 'process_high'
+    label 'process_low'
     debug true
     container 'ubuntu:22.04'
 
