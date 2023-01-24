@@ -9,7 +9,7 @@ process CONVERT_TO_LIMELIGHT_XML {
     label 'process_high_memory'
     label 'process_long'
     debug true
-    container 'mriffle/comet-percolator-to-limelight:2.7.0'
+    container 'mriffle/comet-percolator-to-limelight:2.7.4'
 
     input:
         path pepxml
