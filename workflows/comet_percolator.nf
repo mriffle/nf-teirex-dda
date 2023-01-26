@@ -1,4 +1,5 @@
 // Modules
+include { MSCONVERT } from "../modules/msconvert"
 include { COMET_MULTI_FILE } from "../modules/comet"
 include { COMET_SINGLE_FILE } from "../modules/comet"
 include { PERCOLATOR } from "../modules/percolator"
