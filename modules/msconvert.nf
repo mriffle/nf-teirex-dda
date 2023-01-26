@@ -18,8 +18,7 @@ process MSCONVERT {
         --zlib \\
         --mzML \\
         --64 \\
-        --filter "peakPicking true 1-" \\
-        --filter "demultiplex optimization=overlap_only"
+        --filter "peakPicking true 1-"
     """
 
     stub:
