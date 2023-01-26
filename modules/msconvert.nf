@@ -13,7 +13,7 @@ process MSCONVERT {
     script:
     """
     wine msconvert \\
-        ${raw_file}
+        ${raw_file} \\
         -v \\
         --zlib \\
         --mzML \\
