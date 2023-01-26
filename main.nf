@@ -74,4 +74,4 @@ workflow dummy {
 }
 
 // Email notifications:
-//workflow.onComplete { email() }
+workflow.onComplete { email() }
