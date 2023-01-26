@@ -10,15 +10,23 @@ include { CONVERT_TO_LIMELIGHT_XML } from "../modules/limelight_xml_convert"
 workflow wf_comet_percolator {
 
     take:
-        mzml_file
+        spectra_file_ch
         comet_params
         fasta
+        from_raw_files
     
     main:
 
         // modify comet.params to specify search database
         ADD_FASTA_TO_COMET_PARAMS(comet_params, fasta)
         new_comet_params = ADD_FASTA_TO_COMET_PARAMS.out.comet_fasta_params
+
+        // convert raw files to mzML files if necessary
+        if(from_raw_files) {
+            mzml_file_ch = MSCONVERT(spectra_file_ch)
+        } else {
+            mzml_file_ch = spectra_file_ch
+        }
 
         COMET_SINGLE_FILE(mzml_file, new_comet_params, fasta)
         FILTER_PIN(COMET_SINGLE_FILE.out.pin)

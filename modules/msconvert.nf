@@ -1,29 +1,30 @@
 process MSCONVERT {
-    publishDir "${params.mzml_dir}/${outputDir}", failOnError: true
-    label 'process_low_constant'
+    storeDir "${params.mzml_cache_directory}"
+    label 'process_medium'
     label 'error_retry'
+    container 'chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:3.0.22335-b595b19'
 
     input:
-        tuple val(file_id), path(raw_input), val(outputDir)
+        path raw_file
 
     output:
-        tuple val(file_id), path("${raw_input.baseName}.mzML.gz")
+        path("${raw_file.baseName}.mzML"), emite: mzml_file
 
     script:
     """
     wine msconvert \\
+        ${raw_file}
         -v \\
-        --gzip \\
+        --zlib \\
         --mzML \\
         --64 \\
         --zlib \\
         --filter "peakPicking true 1-" \\
-        ${params.msconvert.demultiplex ? '--filter "demultiplex optimization=overlap_only"' : ''} \\
-        ${raw_input}
+        --filter "demultiplex optimization=overlap_only" \\
     """
 
     stub:
     """
-    touch ${raw_input.baseName}.mzML.gz
+    touch ${raw_file.baseName}.mzML
     """
 }

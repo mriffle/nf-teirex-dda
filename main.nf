@@ -16,26 +16,27 @@ workflow {
 
     fasta = file(params.fasta, checkIfExists: true)
     comet_params = file(params.comet_params, checkIfExists: true)
-    mzml_dir = file(params.mzml_dir, checkIfExists: true)
+    spectra_dir = file(params.spectra_dir, checkIfExists: true)
 
-    // get our mzML files, die if none are found
-    mzml_files = file("$mzml_dir/*.mzML")
+    // get our mzML files
+    mzml_files = file("$spectra_dir/*.mzML")
 
-    if(mzml_files.size() < 1) {
-        error "No mzML files in $mzml_dir"
+    // get our raw files
+    raw_files = file("$spectra_dir/*.raw")
+
+    if(mzml_files.size() < 1 && raw_files.size() < 1) {
+        error "No raw or mzML files found in: $spectra_dir"
     }
 
-    /**
-     * The 'standard' workflow runs locally, and as such, we don't want comet to
-     * run in parallel on all input mzml files--we want to pass all mzML files to
-     * a single invocation of comet, where it will run them all serially.
-     */
-    if(workflow.profile == 'standard') {
-        limelight_xml = wf_comet_percolator_local(mzml_files, comet_params, fasta)
+    if(mzml_files.size() > 0) {
+            spectra_files_ch = Channel.fromList(mzml_files)
+            from_raw_files = false;
     } else {
-        mzml_files_ch = Channel.fromList(mzml_files)
-        limelight_xml = wf_comet_percolator(mzml_files_ch, comet_params, fasta)
+            spectra_files_ch = Channel.fromList(raw_files)
+            from_raw_files = true;
     }
+
+    limelight_xml = wf_comet_percolator(spectra_files_ch, comet_params, fasta, from_raw_files)
 
     if (params.limelight_upload) {
         UPLOAD_TO_LIMELIGHT(
