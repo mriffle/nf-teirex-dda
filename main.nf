@@ -7,7 +7,6 @@ include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
 
 // Sub workflows
 include { wf_comet_percolator } from "./workflows/comet_percolator"
-include { wf_comet_percolator_local } from "./workflows/comet_percolator_local"
 
 //
 // The main workflow
