@@ -32,6 +32,7 @@ class EmailTemplate {
         email_fields['errorReport']  = (workflow.errorReport ?: 'None')
         email_fields['commandLine']  = workflow.commandLine
         email_fields['projectDir']   = workflow.projectDir
+        email_fields['launchDir']    = workflow.launchDir
 
         // Complete the email template:
         def engine = new groovy.text.GStringTemplateEngine()
