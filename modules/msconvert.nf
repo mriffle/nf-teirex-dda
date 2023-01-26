@@ -8,7 +8,7 @@ process MSCONVERT {
         path raw_file
 
     output:
-        path("${raw_file.baseName}.mzML"), emite: mzml_file
+        path("${raw_file.baseName}.mzML"), emit: mzml_file
 
     script:
     """
