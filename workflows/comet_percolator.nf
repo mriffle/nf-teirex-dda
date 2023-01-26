@@ -29,7 +29,7 @@ workflow wf_comet_percolator {
             mzml_file_ch = spectra_file_ch
         }
 
-        COMET_SINGLE_FILE(mzml_file, new_comet_params, fasta)
+        COMET_SINGLE_FILE(mzml_file_ch, new_comet_params, fasta)
         FILTER_PIN(COMET_SINGLE_FILE.out.pin)
         filtered_pin_files = FILTER_PIN.out.filtered_pin.collect()
 
