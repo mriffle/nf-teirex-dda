@@ -1,7 +1,6 @@
 process COMET_MULTI_FILE {
     publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
     label 'process_high_constant'
-    debug true
     container 'mriffle/comet:2022012'
 
     input:

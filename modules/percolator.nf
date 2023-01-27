@@ -2,7 +2,6 @@ process PERCOLATOR {
     publishDir "${params.result_dir}/percolator", failOnError: true, mode: 'copy'
     label 'process_low'
     label 'process_high_memory'
-    debug true
     container 'mriffle/percolator:3.05'
 
     input:

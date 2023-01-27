@@ -6,7 +6,6 @@ def exec_java_command(mem) {
 process UPLOAD_TO_LIMELIGHT {
     publishDir "${params.result_dir}/limelight", failOnError: true, mode: 'copy'
     label 'process_low'
-    debug true
     container 'mriffle/limelight-submit-import:4'
     secret 'LIMELIGHT_SUBMIT_UPLOAD_KEY'
 

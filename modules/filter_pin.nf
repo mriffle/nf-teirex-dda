@@ -6,7 +6,6 @@ def exec_java_command(mem) {
 process FILTER_PIN {
     publishDir "${params.result_dir}/percolator", failOnError: true, mode: 'copy'
     label 'process_low'
-    debug true
     container 'mriffle/filter-pin:1.0.0'
 
     input:

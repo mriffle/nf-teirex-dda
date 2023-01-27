@@ -1,7 +1,6 @@
 process ADD_FASTA_TO_COMET_PARAMS {
     publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
     label 'process_low_constant'
-    debug true
     container 'ubuntu:22.04'
 
     input:
