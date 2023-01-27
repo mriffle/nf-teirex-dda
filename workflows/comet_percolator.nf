@@ -1,7 +1,6 @@
 // Modules
 include { MSCONVERT } from "../modules/msconvert"
-include { COMET_MULTI_FILE } from "../modules/comet"
-include { COMET_SINGLE_FILE } from "../modules/comet"
+include { COMET } from "../modules/comet"
 include { PERCOLATOR } from "../modules/percolator"
 include { FILTER_PIN } from "../modules/filter_pin"
 include { COMBINE_PIN_FILES } from "../modules/combine_pin_files"
@@ -29,8 +28,8 @@ workflow wf_comet_percolator {
             mzml_file_ch = spectra_file_ch
         }
 
-        COMET_SINGLE_FILE(mzml_file_ch, new_comet_params, fasta)
-        FILTER_PIN(COMET_SINGLE_FILE.out.pin)
+        COMET(mzml_file_ch, new_comet_params, fasta)
+        FILTER_PIN(COMET.out.pin)
         filtered_pin_files = FILTER_PIN.out.filtered_pin.collect()
 
         COMBINE_PIN_FILES(filtered_pin_files)
@@ -38,7 +37,7 @@ workflow wf_comet_percolator {
         PERCOLATOR(COMBINE_PIN_FILES.out.combined_pin)
 
         CONVERT_TO_LIMELIGHT_XML(
-            COMET_SINGLE_FILE.out.pepxml.collect(), 
+            COMET.out.pepxml.collect(), 
             PERCOLATOR.out.pout, 
             fasta, 
             new_comet_params
