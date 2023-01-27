@@ -41,7 +41,7 @@ process UPLOAD_TO_LIMELIGHT {
         --limelight-xml-file=${limelight_xml} \
         --search-description="${search_long_name}" \
         --search-short-label="${search_short_name}" \
-        --send-search-path \
+        --path="${workflow.launchDir}" \
         ${scans_param} \
         ${tags_param} \
         1>limelight-submit-upload.stdout 2>limelight-submit-upload.stderr
