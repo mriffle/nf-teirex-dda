@@ -4,6 +4,8 @@ nextflow.enable.dsl = 2
 
 // modules
 include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
+include { PANORAMA_GET_FASTA } from "./modules/panorama"
+include { PANORAMA_GET_COMET_PARAMS } from "./modules/panorama"
 
 // Sub workflows
 include { wf_comet_percolator } from "./workflows/comet_percolator"
@@ -13,9 +15,23 @@ include { wf_comet_percolator } from "./workflows/comet_percolator"
 //
 workflow {
 
-    fasta = file(params.fasta, checkIfExists: true)
     comet_params = file(params.comet_params, checkIfExists: true)
     spectra_dir = file(params.spectra_dir, checkIfExists: true)
+
+    if(params.fasta.startsWith("https://")) {
+        PANORAMA_GET_FASTA(params.fasta)
+        fasta = PANORAMA_GET_FASTA.out.panorama_file
+    } else {
+        fasta = file(params.fasta, checkIfExists: true)
+    }
+
+    if(params.comet_params.startsWith("https://")) {
+        PANORAMA_GET_COMET_PARAMS(params.comet_params)
+        comet_params = PANORAMA_GET_COMET_PARAMS.out.panorama_file
+    } else {
+        comet_params = file(params.comet_params, checkIfExists: true)
+    }
+
 
     // get our mzML files
     mzml_files = file("$spectra_dir/*.mzML")

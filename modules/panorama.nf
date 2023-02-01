@@ -12,6 +12,7 @@ process PANORAMA_GET_RAW_FILE_LIST {
 
     input:
         val web_dav_url
+        secret 'PANORAMA_API_KEY'
 
     output:
         path("panorama_files.txt"), emit: panorama_file_list
@@ -37,35 +38,68 @@ process PANORAMA_GET_RAW_FILE_LIST {
     """
 }
 
-process PANORAMA_GET_FILE {
+process PANORAMA_GET_FASTA {
     label 'process_low_constant'
     container 'mriffle/panorama-client:1.0.0'
     publishDir "${params.result_dir}/panorama", failOnError: true, mode: 'copy', pattern: "*.stdout"
     publishDir "${params.result_dir}/panorama", failOnError: true, mode: 'copy', pattern: "*.stderr"
-    storeDir "${params.mzml_cache_directory}", pattern: '*.raw'
 
     input:
         val web_dav_dir_url
-        val file_name
+        secret 'PANORAMA_API_KEY'
 
     output:
-        path(file_name), emit: panorama_file
+        path("${file(web_dav_dir_url).name}"), emit: panorama_file
         path("*.stdout"), emit: stdout
         path("*.stderr"), emit: stderr
 
     script:
-    """
-    echo "Downloading ${file_name} from Panorama..."
-        ${exec_java_command(task.memory)} \
-        -d \
-        -w "${web_dav_url}${file_name}" \
-        -k \$PANORAMA_API_KEY \
-        1>"panorama-get-${file_name}.stdout" 2>"panorama-get-${file_name}.stderr"
-    echo "Done!" # Needed for proper exit
-    """
+        file_name = file(web_dav_dir_url).name
+        """
+        echo "Downloading ${file_name} from Panorama..."
+            ${exec_java_command(task.memory)} \
+            -d \
+            -w "${web_dav_dir_url}" \
+            -k \$PANORAMA_API_KEY \
+            1>"panorama-get-${file_name}.stdout" 2>"panorama-get-${file_name}.stderr"
+        echo "Done!" # Needed for proper exit
+        """
 
     stub:
     """
-    touch "file_name"
+    touch "{$file(web_dav_dir_url).name}"
+    """
+}
+
+process PANORAMA_GET_COMET_PARAMS {
+    label 'process_low_constant'
+    container 'mriffle/panorama-client:1.0.0'
+    publishDir "${params.result_dir}/panorama", failOnError: true, mode: 'copy', pattern: "*.stdout"
+    publishDir "${params.result_dir}/panorama", failOnError: true, mode: 'copy', pattern: "*.stderr"
+
+    input:
+        val web_dav_dir_url
+        secret 'PANORAMA_API_KEY'
+
+    output:
+        path("${file(web_dav_dir_url).name}"), emit: panorama_file
+        path("*.stdout"), emit: stdout
+        path("*.stderr"), emit: stderr
+
+    script:
+        file_name = file(web_dav_dir_url).name
+        """
+        echo "Downloading ${file_name} from Panorama..."
+            ${exec_java_command(task.memory)} \
+            -d \
+            -w "${web_dav_dir_url}" \
+            -k \$PANORAMA_API_KEY \
+            1>"panorama-get-${file_name}.stdout" 2>"panorama-get-${file_name}.stderr"
+        echo "Done!" # Needed for proper exit
+        """
+
+    stub:
+    """
+    touch "{$file(web_dav_dir_url).name}"
     """
 }
