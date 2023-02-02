@@ -103,3 +103,37 @@ process PANORAMA_GET_COMET_PARAMS {
     touch "{$file(web_dav_dir_url).name}"
     """
 }
+
+process PANORAMA_GET_RAW_FILE {
+    label 'process_low_constant'
+    container 'mriffle/panorama-client:1.0.0'
+    publishDir "${params.result_dir}/panorama", failOnError: true, mode: 'copy', pattern: "*.stdout"
+    publishDir "${params.result_dir}/panorama", failOnError: true, mode: 'copy', pattern: "*.stderr"
+    storeDir "${params.panorama_cache_directory}"
+
+    input:
+        val raw_file_ch
+        val web_dav_dir_url
+        secret 'PANORAMA_API_KEY'
+
+    output:
+        path("${raw_file_ch}"), emit: panorama_file
+        path("*.stdout"), emit: stdout
+        path("*.stderr"), emit: stderr
+
+    script:
+        """
+        echo "Downloading ${raw_file_ch} from Panorama..."
+            ${exec_java_command(task.memory)} \
+            -d \
+            -w "${web_dav_dir_url}${raw_file_ch}" \
+            -k \$PANORAMA_API_KEY \
+            1>"panorama-get-${raw_file_ch}.stdout" 2>"panorama-get-${raw_file_ch}.stderr"
+        echo "Done!" # Needed for proper exit
+        """
+
+    stub:
+    """
+    touch "{$raw_file_ch}"
+    """
+}

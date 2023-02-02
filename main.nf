@@ -15,9 +15,6 @@ include { wf_comet_percolator } from "./workflows/comet_percolator"
 //
 workflow {
 
-    comet_params = file(params.comet_params, checkIfExists: true)
-    spectra_dir = file(params.spectra_dir, checkIfExists: true)
-
     if(params.fasta.startsWith("https://")) {
         PANORAMA_GET_FASTA(params.fasta)
         fasta = PANORAMA_GET_FASTA.out.panorama_file
@@ -32,23 +29,40 @@ workflow {
         comet_params = file(params.comet_params, checkIfExists: true)
     }
 
+    if(params.spectra_dir.startsWith("https://") {
 
-    // get our mzML files
-    mzml_files = file("$spectra_dir/*.mzML")
+        // get raw files from panorama
+        PANORAMA_GET_RAW_FILE_LIST(params.spectra_dir)
+        raw_file_list = PANORAMA_GET_RAW_FILE_LIST.out.panorama_file_list
+        raw_files = raw_file_list.readLines()
 
-    // get our raw files
-    raw_files = file("$spectra_dir/*.raw")
+        panorama_raw_files_ch = Channel.fromList(raw_files)
+        PANORAMA_GET_RAW_FILE(panorama_raw_files_ch, spectra_dir)
 
-    if(mzml_files.size() < 1 && raw_files.size() < 1) {
-        error "No raw or mzML files found in: $spectra_dir"
-    }
+        spectra_files_ch = PANORAMA_GET_RAW_FILE.out.panorama_file
+        from_raw_files = true;
 
-    if(mzml_files.size() > 0) {
-            spectra_files_ch = Channel.fromList(mzml_files)
-            from_raw_files = false;
     } else {
-            spectra_files_ch = Channel.fromList(raw_files)
-            from_raw_files = true;
+
+        spectra_dir = file(params.spectra_dir, checkIfExists: true)
+
+        // get our mzML files
+        mzml_files = file("$spectra_dir/*.mzML")
+
+        // get our raw files
+        raw_files = file("$spectra_dir/*.raw")
+
+        if(mzml_files.size() < 1 && raw_files.size() < 1) {
+            error "No raw or mzML files found in: $spectra_dir"
+        }
+
+        if(mzml_files.size() > 0) {
+                spectra_files_ch = Channel.fromList(mzml_files)
+                from_raw_files = false;
+        } else {
+                spectra_files_ch = Channel.fromList(raw_files)
+                from_raw_files = true;
+        }
     }
 
     limelight_xml = wf_comet_percolator(spectra_files_ch, comet_params, fasta, from_raw_files)
