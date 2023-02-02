@@ -1,6 +1,6 @@
 process COMET {
     publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
-    label 'process_high'
+    label 'process_high_constant'
     container 'mriffle/comet:2022012'
 
     input:
