@@ -7,7 +7,6 @@ process UPLOAD_TO_LIMELIGHT {
     publishDir "${params.result_dir}/limelight", failOnError: true, mode: 'copy'
     label 'process_low'
     container 'mriffle/limelight-submit-import:4'
-    secret 'LIMELIGHT_SUBMIT_UPLOAD_KEY'
 
     input:
         path limelight_xml

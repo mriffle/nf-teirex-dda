@@ -12,7 +12,6 @@ process PANORAMA_GET_RAW_FILE_LIST {
 
     input:
         val web_dav_url
-        secret 'PANORAMA_API_KEY'
 
     output:
         path("panorama_files.txt"), emit: panorama_file_list
@@ -46,7 +45,6 @@ process PANORAMA_GET_FASTA {
 
     input:
         val web_dav_dir_url
-        secret 'PANORAMA_API_KEY'
 
     output:
         path("${file(web_dav_dir_url).name}"), emit: panorama_file
@@ -79,7 +77,6 @@ process PANORAMA_GET_COMET_PARAMS {
 
     input:
         val web_dav_dir_url
-        secret 'PANORAMA_API_KEY'
 
     output:
         path("${file(web_dav_dir_url).name}"), emit: panorama_file
@@ -114,7 +111,6 @@ process PANORAMA_GET_RAW_FILE {
     input:
         val raw_file_ch
         val web_dav_dir_url
-        secret 'PANORAMA_API_KEY'
 
     output:
         path("${raw_file_ch}"), emit: panorama_file

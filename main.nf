@@ -29,7 +29,7 @@ workflow {
         comet_params = file(params.comet_params, checkIfExists: true)
     }
 
-    if(params.spectra_dir.startsWith("https://") {
+    if(params.spectra_dir.startsWith("https://")) {
 
         // get raw files from panorama
         PANORAMA_GET_RAW_FILE_LIST(params.spectra_dir)
@@ -75,7 +75,7 @@ workflow {
             params.limelight_project_id,
             params.limelight_search_description,
             params.limelight_search_short_name,
-            params.limelight_tags
+            params.limelight_tags,
         )
     }
 }
