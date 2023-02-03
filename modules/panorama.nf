@@ -106,8 +106,6 @@ process PANORAMA_GET_COMET_PARAMS {
 process PANORAMA_GET_RAW_FILE {
     label 'process_low_constant'
     container 'mriffle/panorama-client:1.0.0'
-    publishDir "${params.result_dir}/panorama", failOnError: true, mode: 'copy', pattern: "*.stdout"
-    publishDir "${params.result_dir}/panorama", failOnError: true, mode: 'copy', pattern: "*.stderr"
     storeDir "${params.panorama_cache_directory}"
 
     input:
