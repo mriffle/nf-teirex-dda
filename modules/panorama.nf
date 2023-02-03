@@ -14,7 +14,7 @@ process PANORAMA_GET_RAW_FILE_LIST {
         val web_dav_url
 
     output:
-        path("panorama_files.txt"), emit: panorama_file_list
+        path("*.download"), emit: raw_file_placeholder
         path("*.stdout"), emit: stdout
         path("*.stderr"), emit: stderr
 
@@ -24,10 +24,12 @@ process PANORAMA_GET_RAW_FILE_LIST {
         ${exec_java_command(task.memory)} \
         -l \
         -e raw \
-        -w "${web_dav_url}"" \
+        -w "${web_dav_url}" \
         -k \$PANORAMA_API_KEY \
         -o panorama_files.txt \
-        1>panorama-get-files.stdout 2>panorama-get-files.stderr
+        1>panorama-get-files.stdout 2>panorama-get-files.stderr && \
+        cat panorama_files.txt | xargs -I % sh -c 'touch %.download'
+
     echo "Done!" # Needed for proper exit
     """
 
@@ -109,27 +111,28 @@ process PANORAMA_GET_RAW_FILE {
     storeDir "${params.panorama_cache_directory}"
 
     input:
-        val raw_file_ch
+        each path(download_file_placeholder)
         val web_dav_dir_url
 
     output:
-        path("${raw_file_ch}"), emit: panorama_file
+        path("${download_file_placeholder.baseName}"), emit: panorama_file
         path("*.stdout"), emit: stdout
         path("*.stderr"), emit: stderr
 
     script:
+        raw_file_name = download_file_placeholder.baseName
         """
-        echo "Downloading ${raw_file_ch} from Panorama..."
+        echo "Downloading ${raw_file_name} from Panorama..."
             ${exec_java_command(task.memory)} \
             -d \
-            -w "${web_dav_dir_url}${raw_file_ch}" \
+            -w "${web_dav_dir_url}${raw_file_name}" \
             -k \$PANORAMA_API_KEY \
-            1>"panorama-get-${raw_file_ch}.stdout" 2>"panorama-get-${raw_file_ch}.stderr"
+            1>"panorama-get-${raw_file_name}.stdout" 2>"panorama-get-${raw_file_name}.stderr"
         echo "Done!" # Needed for proper exit
         """
 
     stub:
     """
-    touch "{$raw_file_ch}"
+    touch "{$download_file_placeholder.baseName}"
     """
 }

@@ -6,6 +6,8 @@ nextflow.enable.dsl = 2
 include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
 include { PANORAMA_GET_FASTA } from "./modules/panorama"
 include { PANORAMA_GET_COMET_PARAMS } from "./modules/panorama"
+include { PANORAMA_GET_RAW_FILE } from "./modules/panorama"
+include { PANORAMA_GET_RAW_FILE_LIST } from "./modules/panorama"
 
 // Sub workflows
 include { wf_comet_percolator } from "./workflows/comet_percolator"
@@ -30,15 +32,11 @@ workflow {
     }
 
     if(params.spectra_dir.startsWith("https://")) {
-
+        
         // get raw files from panorama
         PANORAMA_GET_RAW_FILE_LIST(params.spectra_dir)
-        raw_file_list = PANORAMA_GET_RAW_FILE_LIST.out.panorama_file_list
-        raw_files = raw_file_list.readLines()
-
-        panorama_raw_files_ch = Channel.fromList(raw_files)
-        PANORAMA_GET_RAW_FILE(panorama_raw_files_ch, spectra_dir)
-
+        PANORAMA_GET_RAW_FILE(PANORAMA_GET_RAW_FILE_LIST.out.raw_file_placeholder, params.spectra_dir)
+        
         spectra_files_ch = PANORAMA_GET_RAW_FILE.out.panorama_file
         from_raw_files = true;
 
