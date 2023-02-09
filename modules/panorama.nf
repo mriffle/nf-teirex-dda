@@ -117,7 +117,6 @@ process PANORAMA_GET_RAW_FILE {
         path("*.stderr"), emit: stderr
 
     script:
-        println(download_file_placeholder)
         raw_file_name = download_file_placeholder.baseName
         """
         echo "Downloading ${raw_file_name} from Panorama..."
