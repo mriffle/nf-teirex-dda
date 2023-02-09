@@ -30,12 +30,12 @@ workflow {
         comet_params = file(params.comet_params, checkIfExists: true)
     }
 
-    spectra_dirs_ch = Channel.from(params.spectra_dir)
-                             .splitText()               // split multiline input
-                             .map{ it.trim() }          // removing surrounding whitespace
-                             .filter{ it.length() > 0 } // skip empty lines
+    if(params.spectra_dir.contains("https://")) {
 
-    if(spectra_dirs_ch.first().startsWith("https://")) {
+        spectra_dirs_ch = Channel.from(params.spectra_dir)
+                                .splitText()               // split multiline input
+                                .map{ it.trim() }          // removing surrounding whitespace
+                                .filter{ it.length() > 0 } // skip empty lines
 
         // get raw files from panorama
         PANORAMA_GET_RAW_FILE_LIST(spectra_dirs_ch)
