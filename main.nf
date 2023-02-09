@@ -33,9 +33,12 @@ workflow {
 
     if(params.spectra_dir.startsWith("https://")) {
         
+        spectra_dirs_ch = Channel.fromList((params.spectra_dir).split(',').flatten())
+
         // get raw files from panorama
-        PANORAMA_GET_RAW_FILE_LIST(params.spectra_dir)
-        PANORAMA_GET_RAW_FILE(PANORAMA_GET_RAW_FILE_LIST.out.raw_file_placeholder, params.spectra_dir)
+        PANORAMA_GET_RAW_FILE_LIST(spectra_dirs_ch)
+        placeholder_ch = PANORAMA_GET_RAW_FILE_LIST.out.raw_file_placeholders.transpose()
+        PANORAMA_GET_RAW_FILE(placeholder_ch)
         
         spectra_files_ch = PANORAMA_GET_RAW_FILE.out.panorama_file
         from_raw_files = true;

@@ -11,10 +11,10 @@ process PANORAMA_GET_RAW_FILE_LIST {
     publishDir "${params.result_dir}/panorama", failOnError: true, mode: 'copy'
 
     input:
-        val web_dav_url
+        each web_dav_url
 
     output:
-        path("*.download"), emit: raw_file_placeholder
+        tuple val(web_dav_url), path("*.download"), emit: raw_file_placeholders
         path("*.stdout"), emit: stdout
         path("*.stderr"), emit: stderr
 
@@ -109,8 +109,7 @@ process PANORAMA_GET_RAW_FILE {
     storeDir "${params.panorama_cache_directory}"
 
     input:
-        each path(download_file_placeholder)
-        val web_dav_dir_url
+        tuple val(web_dav_dir_url), path(download_file_placeholder)
 
     output:
         path("${download_file_placeholder.baseName}"), emit: panorama_file
@@ -118,6 +117,7 @@ process PANORAMA_GET_RAW_FILE {
         path("*.stderr"), emit: stderr
 
     script:
+        println(download_file_placeholder)
         raw_file_name = download_file_placeholder.baseName
         """
         echo "Downloading ${raw_file_name} from Panorama..."
