@@ -37,14 +37,15 @@ workflow wf_comet_percolator {
 
         PERCOLATOR(COMBINE_PIN_FILES.out.combined_pin)
 
-        CONVERT_TO_LIMELIGHT_XML(
-            COMET.out.pepxml.collect(), 
-            PERCOLATOR.out.pout, 
-            fasta, 
-            new_comet_params
-        )
-
         if (params.limelight_upload) {
+
+            CONVERT_TO_LIMELIGHT_XML(
+                COMET.out.pepxml.collect(), 
+                PERCOLATOR.out.pout, 
+                fasta, 
+                new_comet_params
+            )
+
             UPLOAD_TO_LIMELIGHT(
                 CONVERT_TO_LIMELIGHT_XML.out.limelight_xml,
                 mzml_file_ch.collect(),
