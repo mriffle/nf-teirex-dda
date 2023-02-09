@@ -3,7 +3,6 @@
 nextflow.enable.dsl = 2
 
 // modules
-include { UPLOAD_TO_LIMELIGHT } from "./modules/limelight_upload"
 include { PANORAMA_GET_FASTA } from "./modules/panorama"
 include { PANORAMA_GET_COMET_PARAMS } from "./modules/panorama"
 include { PANORAMA_GET_RAW_FILE } from "./modules/panorama"
@@ -69,19 +68,8 @@ workflow {
         }
     }
 
-    limelight_xml = wf_comet_percolator(spectra_files_ch, comet_params, fasta, from_raw_files)
+    wf_comet_percolator(spectra_files_ch, comet_params, fasta, from_raw_files)
 
-    if (params.limelight_upload) {
-        UPLOAD_TO_LIMELIGHT(
-            limelight_xml,
-            mzml_files,
-            params.limelight_webapp_url,
-            params.limelight_project_id,
-            params.limelight_search_description,
-            params.limelight_search_short_name,
-            params.limelight_tags,
-        )
-    }
 }
 
 //
