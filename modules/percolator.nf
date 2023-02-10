@@ -2,7 +2,7 @@ process PERCOLATOR {
     publishDir "${params.result_dir}/percolator", failOnError: true, mode: 'copy'
     label 'process_medium'
     label 'process_high_memory'
-    container 'mriffle/percolator:3.05'
+    container 'quay.io/protio/percolator:3.05'
 
     input:
         path pin_file

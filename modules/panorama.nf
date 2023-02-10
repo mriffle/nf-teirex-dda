@@ -105,7 +105,7 @@ process PANORAMA_GET_COMET_PARAMS {
 
 process PANORAMA_GET_RAW_FILE {
     label 'process_low_constant'
-    container 'mriffle/panorama-client:1.0.0'
+    container 'quay.io/protio/panorama-client:1.0.0'
     storeDir "${params.panorama_cache_directory}"
 
     input:
