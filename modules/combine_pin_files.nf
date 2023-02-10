@@ -1,7 +1,7 @@
 process COMBINE_PIN_FILES {
     publishDir "${params.result_dir}/percolator", failOnError: true, mode: 'copy'
     label 'process_low_constant'
-    container 'ubuntu:22.04'
+    container "${workflow.profile == 'aws' ? 'public.ecr.aws/docker/library/ubuntu:22.04' : 'ubuntu:22.04'}"
 
     input:
         path pin_files

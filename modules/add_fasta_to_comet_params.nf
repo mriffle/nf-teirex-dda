@@ -1,7 +1,7 @@
 process ADD_FASTA_TO_COMET_PARAMS {
     publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
     label 'process_low_constant'
-    container 'ubuntu:22.04'
+    container "${workflow.profile == 'aws' ? 'public.ecr.aws/docker/library/ubuntu:22.04' : 'ubuntu:22.04'}"
 
     input:
         path comet_params
