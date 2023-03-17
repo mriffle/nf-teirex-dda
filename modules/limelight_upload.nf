@@ -11,6 +11,7 @@ process UPLOAD_TO_LIMELIGHT {
     input:
         path limelight_xml
         path mzml_files
+        path fasta
         val webapp_url
         val project_id
         val search_long_name
@@ -38,6 +39,7 @@ process UPLOAD_TO_LIMELIGHT {
         --user-submit-import-key=\$LIMELIGHT_SUBMIT_UPLOAD_KEY \
         --project-id=${project_id} \
         --limelight-xml-file=${limelight_xml} \
+        --fasta-file=${fasta} \
         --search-description="${search_long_name}" \
         --search-short-label="${search_short_name}" \
         --path="${workflow.launchDir}" \
