@@ -58,7 +58,30 @@ The ``params`` Section
      - Description
    * - ✓
      - ``spectra_dir``
-     - That path to the location of the raw or mzML files to be processed.
+     - That path to the location of the raw or mzML files to be processed. This can be a directory location (e.g., ``/data/mass_spec/my_raw_files/`` or a Panorama WebDAV URL (described above).
+   * - ✓
+     - ``fasta``
+     - That path to the location of the FASTA file to be used in the Comet search. This can be a directory location (e.g., ``/data/mass_spec/my.fasta`` or a Panorama WebDAV URL (described above).
+   * - 
+     - ``limelight_upload``
+     - Set to ``'true'`` to upload to Limelight. If set to ``true``, the following Limelight-related parameters apply. Default: ``false``.
+   * - 
+     - ``limelight_project_id``
+     - This is required if ``limelight_upload`` is set to ``true``. This is the Limelight project ID to which to upload data.
+   * - 
+     - ``limelight_webapp_url``
+     - This is required if ``limelight_upload`` is set to ``true``. This is the URL of the Limelight instance to which to upload data. E.g., ``'https://limelight.yeastrc.org/limelight'``.
+   * - 
+     - ``limelight_search_description``
+     - This is required if ``limelight_upload`` is set to ``true``. This is a one-line description of the search that will appear in Limelight. 
+   * - 
+     - ``limelight_search_short_name``
+     - This is required if ``limelight_upload`` is set to ``true``. This is a very brief one-word nickname for this search. Used in plots to label data.
+   * - 
+     - ``limelight_tags``
+     - Comma-delimited list of Limelight tags to use for this search (e.g., ``'yeast,control,2023'``. Any tags present that haven't been created in Limelight will be created in Limelight. Note: You can also specify
+       categories for tags, and tags with the same tag categories will be grouped together in Limelight. For example, one could have a tag category called ``treatment`` and tags called ``control`` or ``irradiated`` as
+       tags within this tag category. To specify a tag category use the tag category name then a tilda (~) then the tag name. E.g., ``treatment~control,organism~yeast,year~2023``. Default: no tags will be sent.
    * - 
      - ``email``
      - The email address to which a notification should be sent upon workflow completion. If no email is specified, no email will be sent. To send email, you must configure mail server settings (see below).
