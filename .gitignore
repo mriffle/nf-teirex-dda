@@ -4,3 +4,7 @@
 /test-data/work
 /test-data/results
 /test-data/.command.trace
+
+/docs/build
+.vscode
+
