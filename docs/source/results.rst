@@ -8,11 +8,26 @@ When running the workflow you should see output similar to:
 
 .. code-block:: console
 
-    coming soon
+    N E X T F L O W  ~  version 22.10.5
+    NOTE: Your local project version looks outdated - a different revision is available in the remote repository [96d78f009f]
+    Launching `https://github.com/mriffle/nf-teirex-dda` [ridiculous_mahavira] DSL2 - revision: 39f01e6119 [main]
+    executor >  awsbatch (23)
+    [58/e7e490] process > wf_comet_percolator:ADD_FASTA_TO_COMET_PARAMS [100%] 1 of 1 ✔
+    [skipped  ] process > wf_comet_percolator:MSCONVERT (7)             [100%] 9 of 9, stored: 9 ✔
+    [e8/bb3aec] process > wf_comet_percolator:COMET (6)                 [100%] 9 of 9 ✔
+    [5e/24ea8a] process > wf_comet_percolator:FILTER_PIN (1)            [100%] 9 of 9 ✔
+    [53/bba634] process > wf_comet_percolator:COMBINE_PIN_FILES         [100%] 1 of 1 ✔
+    [ae/3899ff] process > wf_comet_percolator:PERCOLATOR                [100%] 1 of 1 ✔
+    [d4/d2c311] process > wf_comet_percolator:CONVERT_TO_LIMELIGHT_XML  [100%] 1 of 1 ✔
+    [7e/9530ea] process > wf_comet_percolator:UPLOAD_TO_LIMELIGHT       [100%] 1 of 1 ✔
+    Completed at: 14-Jun-2023 13:39:38
+    Duration    : 18m 53s
+    CPU hours   : 3.9
+    Succeeded   : 23
 
 The first line shows the version of Nextflow you are running. The second line shows the version of the workflow
 you are running. The third line shows the executor you are using. An executor in Nextflow describes the actual
-system the steps of the workflow are running on. In this case the *slurm* computer cluster executor was used.
+system the steps of the workflow are running on. In this case the *AWS Batch* executor was used.
 The next several lines show the actual steps of the workflow as they are running. If a particular step is run
 multiple times (e.g., converting many RAW files to mzML using msconvert), the percent complete shows the
 percentage of the RAW files that have been converted. The final four lines appear when the workflow completes,
