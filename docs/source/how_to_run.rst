@@ -1,7 +1,7 @@
 ===================================
 How to Run the Workflow
 ===================================
-Follow these instructions to run the Nextflow DIA workflow from your system.
+Follow these instructions to run the Nextflow DDA workflow from your system.
 Note that your system must remain on for the duration of the running of the
 workflow. Even though the steps may be running on AWS Batch, your system still
 orchestrates the running of the steps.
@@ -88,7 +88,7 @@ Follow these steps to run a workflow:
 4. Run the workflow.
 
    Nextflow workflows may be run with a variety of *executors*. Executors are what run the actual steps of the pipeline; that is, they are
-   the systems on which steps like Encyclopedia and msconvert will be run. Examples of executors are your local computer, a computer cluster, or
+   the systems on which steps like Comet and msconvert will be run. Examples of executors are your local computer, a computer cluster, or
    AWS Batch. The example below describes how to run the workflow using your local system or AWS Batch as the executor. 
 
 
