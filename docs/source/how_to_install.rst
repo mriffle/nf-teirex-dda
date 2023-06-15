@@ -100,10 +100,10 @@ Follow these steps:
 
 Optional: Install Docker on local system
 =========================================
-This step needs to be performed if processes (e.g., encyclopedia) are going to be run on your local computer. That is, the actual processing steps will be run locally.
+This step needs to be performed if processes (e.g., Comet) are going to be run on your local computer. That is, the actual processing steps will be run locally.
 
 Follow the Docker install guide at: https://docs.docker.com/engine/install/
 
 Optional: Set up Docker credentials
 ===================================
-If you installed Docker and are going to be running the steps of the workflow on the local system (e.g. running Encyclopedia on your computer), you will need access to execute Docker containers without having to use sudo. Instructions to set this up can be found at https://docs.docker.com/engine/install/linux-postinstall/, under the heading “Manage Docker as a non-root user”. 
+If you installed Docker and are going to be running the steps of the workflow on the local system (e.g. running Comet on your computer), you will need access to execute Docker containers without having to use sudo. Instructions to set this up can be found at https://docs.docker.com/engine/install/linux-postinstall/, under the heading “Manage Docker as a non-root user”. 
