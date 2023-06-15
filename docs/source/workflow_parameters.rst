@@ -64,7 +64,7 @@ The ``params`` Section
      - That path to the location of the FASTA file to be used in the Comet search. This can be a directory location (e.g., ``/data/mass_spec/my.fasta`` or a Panorama WebDAV URL (described above).
    * - 
      - ``comet_params``
-     - That path to the location of the Comet params file to be used in the Comet search. This can be a directory location (e.g., ``/data/mass_spec/my.fasta`` or a Panorama WebDAV URL (described above). Default: ``'comet.params'``.
+     - That path to the location of the Comet params file to be used in the Comet search. This can be a directory location (e.g., ``/data/mass_spec/comet.params`` or a Panorama WebDAV URL (described above). Default: ``'comet.params'``.
    * - 
      - ``limelight_upload``
      - Set to ``'true'`` to upload to Limelight. If set to ``true``, the following Limelight-related parameters apply. Default: ``false``.
