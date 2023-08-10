@@ -18,7 +18,7 @@ process FILTER_PIN {
     script:
     """
     echo "Removing all non rank one hits from Percolator input file..."
-        ${exec_java_command(task.memory)} ${pin} >${pin.baseName}.filtered.pin 2>${pin.baseName}.filtered.pin.stderr
+        ${exec_java_command(task.memory)} ${pin} >${pin.baseName}.filtered.pin 2> >(tee "${pin.baseName}.filtered.pin.stderr" >&2)
 
     echo "Done!" # Needed for proper exit
     """
