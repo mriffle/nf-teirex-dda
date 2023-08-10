@@ -16,7 +16,7 @@ process ADD_FASTA_TO_COMET_PARAMS {
     """
     echo "Adding FASTA to comet.params..."
 
-    sed -e 's/database_name = \\S\\+/database_name = $fasta/g' $comet_params >comet.fasta.params 2>add-fasta-to-params.stderr
+    sed -e 's/database_name = \\S\\+/database_name = $fasta/g' $comet_params >comet.fasta.params 2> >(tee add-fasta-to-params.stderr >&2)
 
     echo "DONE!" # Needed for proper exit
     """

@@ -20,7 +20,7 @@ process COMET {
     comet \
         -P${comet_params_file} \
         ${mzml_file} \
-        1>${mzml_file.baseName}.comet.stdout 2>${mzml_file.baseName}.comet.stderr
+        > >(tee "${mzml_file.baseName}.comet.stdout") 2> >(tee "${mzml_file.baseName}.comet.stderr" >&2)
 
     echo "DONE!" # Needed for proper exit
     """
