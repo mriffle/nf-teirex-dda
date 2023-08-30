@@ -61,7 +61,7 @@ process PANORAMA_GET_FASTA {
             -d \
             -w "${web_dav_dir_url}" \
             -k \$PANORAMA_API_KEY \
-            > >(tee "panorama-get-${file_name}.stdout") 2> >(tee "panorama-get-${file_name}.stdout" >&2)
+            > >(tee "panorama-get-${file_name}.stdout") 2> >(tee "panorama-get-${file_name}.stderr" >&2)
         echo "Done!" # Needed for proper exit
         """
 
