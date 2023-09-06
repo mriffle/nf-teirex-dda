@@ -6,6 +6,7 @@ process COMET_SEARCH {
     input:
         path mzml_file
         path comet_params_file
+        path fasta_index
         path fasta_file
 
     output:

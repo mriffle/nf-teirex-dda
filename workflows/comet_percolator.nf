@@ -30,7 +30,7 @@ workflow wf_comet_percolator {
         fasta_index = COMET_BUILD_INDEX.out.fasta_index
 
         // do comet search
-        COMET_SEARCH(mzml_file_ch, comet_params, fasta_index)
+        COMET_SEARCH(mzml_file_ch, comet_params, fasta_index, fasta)
 
         // do post processing with percolator
         FILTER_PIN(COMET_SEARCH.out.pin)
