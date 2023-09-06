@@ -19,7 +19,7 @@ process COMET_SEARCH {
     """
 
     echo "Adding FASTA index to comet.params..."
-    sed -e 's/database_name = \\S\\+/database_name = ${fasta_file}/g' ${comet_params_file} >comet.fasta.params 2> >(tee add-fasta-index-to-params.stderr >&2)
+    sed -e 's/database_name = \\S\\+/database_name = ${fasta_index}/g' ${comet_params_file} >comet.fasta.params 2> >(tee add-fasta-index-to-params.stderr >&2)
 
     echo "Running comet (search)..."
     comet \
