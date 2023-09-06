@@ -44,7 +44,7 @@ workflow wf_comet_percolator {
                 COMET_SEARCH.out.pepxml.collect(), 
                 PERCOLATOR.out.pout, 
                 fasta, 
-                new_comet_params
+                comet_params
             )
 
             UPLOAD_TO_LIMELIGHT(
