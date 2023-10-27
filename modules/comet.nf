@@ -1,7 +1,7 @@
 process COMET {
     publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
     label 'process_high_constant'
-    container 'quay.io/protio/comet:2023020-prerelease'
+    container 'quay.io/protio/comet:2023020-prerelease2'
 
     input:
         path mzml_file
