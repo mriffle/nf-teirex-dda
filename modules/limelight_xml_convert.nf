@@ -7,7 +7,7 @@ process CONVERT_TO_LIMELIGHT_XML {
     publishDir "${params.result_dir}/limelight", failOnError: true, mode: 'copy'
     label 'process_low'
     label 'process_high_memory'
-    container 'mriffle/comet-percolator-to-limelight:2.7.6'
+    container 'mriffle/comet-percolator-to-limelight:2.8.0'
 
     input:
         path pepxml
