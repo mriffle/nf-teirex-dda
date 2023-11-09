@@ -86,8 +86,11 @@ The ``params`` Section
        categories for tags, and tags with the same tag categories will be grouped together in Limelight. For example, one could have a tag category called ``treatment`` and tags called ``control`` or ``irradiated`` as
        tags within this tag category. To specify a tag category use the tag category name then a tilda (~) then the tag name. E.g., ``treatment~control,organism~yeast,year~2023``. Default: no tags will be sent.
    * - 
-     - ``limelight_search_short_name``
-     - This is required if ``limelight_upload`` is set to ``true``. This is a very brief one-word nickname for this search. Used in plots to label data.
+     - ``limelight_import_decoys``
+     - If set to ``true``, decoy hits will be imported into Limelight--enabling target/decoy QC visualization. Only set to ``true`` if this is required, dramatically increases file sizes. Default: ``false``
+   * - 
+     - ``limelight_entrapment_prefix``
+     - If this set, any protein that begins with this string will be considered an entrapment decoy by Limelight--that is a target hit that is secretly really a decoy. This enables some QC/statistic tools within Limelight to estimate error. Default: not set.
    * - 
      - ``email``
      - The email address to which a notification should be sent upon workflow completion. If no email is specified, no email will be sent. To send email, you must configure mail server settings (see below).
