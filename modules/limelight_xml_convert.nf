@@ -25,7 +25,7 @@ process CONVERT_TO_LIMELIGHT_XML {
     script:
 
     decoy_import_flag = import_decoys ? '--import-decoys' : ''
-    entrapment_flag = entrapment_prefix ? "--foo-bar=${entrapment_prefix}" : ''
+    entrapment_flag = entrapment_prefix ? "--independent-decoy-prefix=${entrapment_prefix}" : ''
 
     """
     echo "Running Limelight XML conversion..."
