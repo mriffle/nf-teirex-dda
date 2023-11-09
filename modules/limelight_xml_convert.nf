@@ -14,6 +14,7 @@ process CONVERT_TO_LIMELIGHT_XML {
         path pout
         path fasta
         path comet_params
+        val import_decoys
 
     output:
         path("results.limelight.xml"), emit: limelight_xml
@@ -21,6 +22,9 @@ process CONVERT_TO_LIMELIGHT_XML {
         path("*.stderr"), emit: stderr
 
     script:
+
+    decoy_import_flag = import_decoys ? '--import-decoys' : ''
+
     """
     echo "Running Limelight XML conversion..."
         ${exec_java_command(task.memory)} \
@@ -29,7 +33,7 @@ process CONVERT_TO_LIMELIGHT_XML {
         -p ${pout} \
         -d . \
         -o results.limelight.xml \
-        -v \
+        -v ${decoy_import_flag} \
         > >(tee "limelight-xml-convert.stdout") 2> >(tee "limelight-xml-convert.stderr" >&2)
         
 
