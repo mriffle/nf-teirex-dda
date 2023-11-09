@@ -35,7 +35,10 @@ workflow wf_comet_percolator {
 
         COMBINE_PIN_FILES(filtered_pin_files)
 
-        PERCOLATOR(COMBINE_PIN_FILES.out.combined_pin)
+        PERCOLATOR(
+            COMBINE_PIN_FILES.out.combined_pin,
+            params.limelight_import_decoys
+        )
 
         if (params.limelight_upload) {
 
@@ -43,7 +46,8 @@ workflow wf_comet_percolator {
                 COMET.out.pepxml.collect(), 
                 PERCOLATOR.out.pout, 
                 fasta, 
-                new_comet_params
+                new_comet_params,
+                params.limelight_import_decoys
             )
 
             UPLOAD_TO_LIMELIGHT(
