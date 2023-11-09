@@ -15,6 +15,7 @@ process CONVERT_TO_LIMELIGHT_XML {
         path fasta
         path comet_params
         val import_decoys
+        val entrapment_prefix
 
     output:
         path("results.limelight.xml"), emit: limelight_xml
@@ -24,6 +25,7 @@ process CONVERT_TO_LIMELIGHT_XML {
     script:
 
     decoy_import_flag = import_decoys ? '--import-decoys' : ''
+    entrapment_flag = entrapment_prefix ? '--independent-decoy-prefix=' + entrapment_prefix : ''
 
     """
     echo "Running Limelight XML conversion..."
@@ -33,7 +35,7 @@ process CONVERT_TO_LIMELIGHT_XML {
         -p ${pout} \
         -d . \
         -o results.limelight.xml \
-        -v ${decoy_import_flag} \
+        -v ${decoy_import_flag} ${entrapment_flag} \
         > >(tee "limelight-xml-convert.stdout") 2> >(tee "limelight-xml-convert.stderr" >&2)
         
 
