@@ -47,7 +47,8 @@ workflow wf_comet_percolator {
                 PERCOLATOR.out.pout, 
                 fasta, 
                 new_comet_params,
-                params.limelight_import_decoys
+                params.limelight_import_decoys,
+                params.limelight_entrapment_prefix
             )
 
             UPLOAD_TO_LIMELIGHT(
