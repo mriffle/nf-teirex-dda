@@ -90,7 +90,7 @@ The ``params`` Section
      - If set to ``true``, decoy hits will be imported into Limelight--enabling target/decoy QC visualization. Only set to ``true`` if this is required, dramatically increases file sizes. Default: ``false``
    * - 
      - ``limelight_entrapment_prefix``
-     - If this set, any protein that begins with this string will be considered an entrapment decoy by Limelight--that is a target hit that is secretly really a decoy. This enables some QC/statistic tools within Limelight to estimate error. Default: not set.
+     - If this set, any protein that begins with this string will be considered an entrapment decoy by Limelight--that is a target hit that is secretly really a decoy. This enables some QC/statistic tools within Limelight to estimate error. Example: ``limelight_entrapment_prefix = 'ENTRAP'``. Default: not set.
    * - 
      - ``email``
      - The email address to which a notification should be sent upon workflow completion. If no email is specified, no email will be sent. To send email, you must configure mail server settings (see below).
