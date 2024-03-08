@@ -1,7 +1,7 @@
 process COMET_SEARCH {
     publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
     label 'process_high_constant'
-    container 'quay.io/protio/comet:2023020-exp'
+    container 'quay.io/protio/comet:2024010-exp'
 
     input:
         path mzml_file
@@ -30,7 +30,7 @@ process COMET_SEARCH {
 process COMET_BUILD_INDEX {
     publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
     label 'process_high_constant'
-    container 'quay.io/protio/comet:2023020-exp'
+    container 'quay.io/protio/comet:2024010-exp'
 
     input:
         path comet_params_file
