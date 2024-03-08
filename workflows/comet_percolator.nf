@@ -1,6 +1,7 @@
 // Modules
 include { MSCONVERT } from "../modules/msconvert"
 include { COMET_SEARCH } from "../modules/comet"
+include { COMET_SEARCH_WITH_INDEX } from "../modules/comet"
 include { COMET_BUILD_INDEX } from "../modules/comet"
 include { PERCOLATOR } from "../modules/percolator"
 include { FILTER_PIN } from "../modules/filter_pin"
