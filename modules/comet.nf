@@ -19,6 +19,7 @@ process COMET {
     echo "Running comet..."
     comet \
         -P${comet_params_file} \
+        -D${fasta_file} \
         ${mzml_file} \
         > >(tee "${mzml_file.baseName}.comet.stdout") 2> >(tee "${mzml_file.baseName}.comet.stderr" >&2)
 
