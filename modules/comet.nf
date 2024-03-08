@@ -19,7 +19,7 @@ process COMET_SEARCH {
     echo "Running comet (search)..."
     comet \
         -P${comet_params_file} \
-        -D${fasta_file}
+        -D${fasta_file} \
         ${mzml_file} \
         > >(tee "${mzml_file.baseName}.comet.stdout") 2> >(tee "${mzml_file.baseName}.comet.stderr" >&2)
 
@@ -46,7 +46,7 @@ process COMET_BUILD_INDEX {
     echo "Running comet (build index)..."
     comet \
         -P${comet_params_file} \
-        -D${fasta_file}
+        -D${fasta_file} \
         -i \
         > >(tee "comet-build-index.stdout") 2> >(tee "comet-build-index.stderr" >&2)
 
