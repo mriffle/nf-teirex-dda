@@ -29,17 +29,17 @@ workflow wf_comet_percolator {
         if(do_use_fasta_index) {
             // build index w/ comet first
             COMET_BUILD_INDEX(comet_params, fasta)
-            fasta_index = COMET_BUILD_INDEX.out.fasta_index
-            fasta_to_use = fasta_index
+            COMET_SEARCH_WITH_INDEX(mzml_file_ch, comet_params, COMET_BUILD_INDEX.out.fasta_index, fasta)
+            pins_to_use = COMET_SEARCH_WITH_INDEX.out.pin
+            pepxmls_to_use = COMET_SEARCH_WITH_INDEX.out.pepxml
         } else {
-            fasta_to_use = fasta
+            COMET_SEARCH(mzml_file_ch, comet_params, fasta_to_use)
+            pins_to_use = COMET_SEARCH.out.pin
+            pepxmls_to_use = COMET_SEARCH.out.pepxml
         }
 
-        // do comet search
-        COMET_SEARCH(mzml_file_ch, comet_params, fasta_to_use)
-
         // do post processing with percolator
-        FILTER_PIN(COMET_SEARCH.out.pin)
+        FILTER_PIN(pins_to_use)
         filtered_pin_files = FILTER_PIN.out.filtered_pin.collect()
         COMBINE_PIN_FILES(filtered_pin_files)
         PERCOLATOR(COMBINE_PIN_FILES.out.combined_pin)
@@ -47,7 +47,7 @@ workflow wf_comet_percolator {
         if (params.limelight_upload) {
 
             CONVERT_TO_LIMELIGHT_XML(
-                COMET_SEARCH.out.pepxml.collect(), 
+                pepxmls_to_use.collect(), 
                 PERCOLATOR.out.pout, 
                 fasta, 
                 comet_params

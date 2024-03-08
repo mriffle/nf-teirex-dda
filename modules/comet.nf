@@ -27,6 +27,36 @@ process COMET_SEARCH {
     """
 }
 
+process COMET_SEARCH_WITH_INDEX {
+    publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
+    label 'process_high_constant'
+    container 'quay.io/protio/comet:2024010-exp'
+
+    input:
+        path mzml_file
+        path comet_params_file
+        path fasta_index
+        path fasta_file
+
+    output:
+        path("*.pep.xml"), emit: pepxml
+        path("*.pin"), emit: pin
+        path("*.stdout"), emit: stdout
+        path("*.stderr"), emit: stderr
+
+    script:
+    """
+    echo "Running comet (search)..."
+    comet \
+        -P${comet_params_file} \
+        -D${fasta_index} \
+        ${mzml_file} \
+        > >(tee "${mzml_file.baseName}.comet.stdout") 2> >(tee "${mzml_file.baseName}.comet.stderr" >&2)
+
+    echo "DONE!" # Needed for proper exit
+    """
+}
+
 process COMET_BUILD_INDEX {
     publishDir "${params.result_dir}/comet", failOnError: true, mode: 'copy'
     label 'process_high_constant'
