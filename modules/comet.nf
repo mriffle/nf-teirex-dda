@@ -6,7 +6,6 @@ process COMET_SEARCH {
     input:
         path mzml_file
         path comet_params_file
-        path fasta_index
         path fasta_file
 
     output:
@@ -17,13 +16,10 @@ process COMET_SEARCH {
 
     script:
     """
-
-    echo "Adding FASTA index to comet.params..."
-    sed -e 's/database_name = \\S\\+/database_name = ${fasta_index}/g' ${comet_params_file} >comet.fasta.params 2> >(tee add-fasta-index-to-params.stderr >&2)
-
     echo "Running comet (search)..."
     comet \
         -Pcomet.fasta.params \
+        -D${fasta_file}
         ${mzml_file} \
         > >(tee "${mzml_file.baseName}.comet.stdout") 2> >(tee "${mzml_file.baseName}.comet.stderr" >&2)
 
@@ -47,13 +43,10 @@ process COMET_BUILD_INDEX {
 
     script:
     """
-    echo "Adding FASTA to comet.params..."
-    sed -e 's/database_name = \\S\\+/database_name = ${fasta_file}/g' ${comet_params_file} >comet.fasta.params 2> >(tee add-fasta-to-params.stderr >&2)
-
-
     echo "Running comet (build index)..."
     comet \
         -Pcomet.fasta.params \
+        -D${fasta_file}
         -i \
         > >(tee "comet-build-index.stdout") 2> >(tee "comet-build-index.stderr" >&2)
 

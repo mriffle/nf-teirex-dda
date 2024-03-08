@@ -68,7 +68,7 @@ workflow {
         }
     }
 
-    wf_comet_percolator(spectra_files_ch, comet_params, fasta, from_raw_files)
+    wf_comet_percolator(spectra_files_ch, comet_params, fasta, from_raw_files, params.do_use_fasta_index)
 
 }
 

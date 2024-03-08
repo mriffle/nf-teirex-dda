@@ -15,6 +15,7 @@ workflow wf_comet_percolator {
         comet_params
         fasta
         from_raw_files
+        do_use_fasta_index
     
     main:
 
@@ -25,12 +26,17 @@ workflow wf_comet_percolator {
             mzml_file_ch = spectra_file_ch
         }
 
-        // build index w/ comet first
-        COMET_BUILD_INDEX(comet_params, fasta)
-        fasta_index = COMET_BUILD_INDEX.out.fasta_index
+        if(do_use_fasta_index) {
+            // build index w/ comet first
+            COMET_BUILD_INDEX(comet_params, fasta)
+            fasta_index = COMET_BUILD_INDEX.out.fasta_index
+            fasta_to_use = fasta_index
+        } else {
+            fasta_to_use = fasta
+        }
 
         // do comet search
-        COMET_SEARCH(mzml_file_ch, comet_params, fasta_index, fasta)
+        COMET_SEARCH(mzml_file_ch, comet_params, fasta_to_use)
 
         // do post processing with percolator
         FILTER_PIN(COMET_SEARCH.out.pin)
