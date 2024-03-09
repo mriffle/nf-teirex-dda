@@ -34,7 +34,7 @@ workflow wf_comet_percolator {
             pins_to_use = COMET_SEARCH_WITH_INDEX.out.pin
             pepxmls_to_use = COMET_SEARCH_WITH_INDEX.out.pepxml
         } else {
-            COMET_SEARCH(mzml_file_ch, comet_params, fasta_to_use)
+            COMET_SEARCH(mzml_file_ch, comet_params, fasta)
             pins_to_use = COMET_SEARCH.out.pin
             pepxmls_to_use = COMET_SEARCH.out.pepxml
         }
