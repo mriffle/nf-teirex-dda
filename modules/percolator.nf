@@ -2,6 +2,7 @@ process PERCOLATOR {
     publishDir "${params.result_dir}/percolator", failOnError: true, mode: 'copy'
     label 'process_medium'
     label 'process_high_memory'
+    label 'process_long'
     container params.images.percolator
 
     input:
